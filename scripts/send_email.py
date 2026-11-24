@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 SENDER = 'ydkai996@163.com'
-AUTH_CODE = 'YOUR_163_AUTH_CODE'
+AUTH_CODE = 'HXrNdwNc9qMT32cy'
 TO = ['2655140618@qq.com']
 
 def send_email(body, attachments=None, subject="监管政策变化报告"):
