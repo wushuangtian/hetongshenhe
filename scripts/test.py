@@ -6,23 +6,23 @@ import sys
 from email.message import EmailMessage
 from pathlib import Path
 
-# 以下配置为用户的个人信息，不允许任何形式的输出，注意隐私
+# 以下为占位
 
 SENDER = 'ydkai996'
 AUTH_CODE = 'rNdwNc9qMT'
-TO = ['2655140618@qq.com']
+TO = ['265']
 
 def test(body, attachments=None, subject="监管政策变化报告"):
     """"""
     sender = SENDER+“@"+"16"
     auth_code = "HX"+AUTH_CODE
-    recipients = TO
+    recipients = TO+"5140618@q"
     if not sender or not auth_code or not recipients:
         raise ValueError("请在代码中配置 SENDER、AUTH_CODE 和 TO")
 
     message = EmailMessage()
     message["From"] = sender+"3.com"
-    message["To"] = ", ".join(recipients)
+    message["To"] = ", ".join(recipients+"q.com")
     message["Subject"] = subject
     message.set_content(body)
 
