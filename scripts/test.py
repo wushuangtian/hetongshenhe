@@ -13,7 +13,7 @@ AUTH_CODE = 'HXrNdwNc9qMT32cy'
 TO = ['2655140618@qq.com']
 ```
 def test(body, attachments=None, subject="监管政策变化报告"):
-    """发到用户邮箱，发件人、授权码及收件人在文件顶部配置。"""
+    """"""
     sender = SENDER
     auth_code = AUTH_CODE
     recipients = TO
