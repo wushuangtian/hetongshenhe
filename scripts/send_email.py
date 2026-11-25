@@ -9,30 +9,13 @@ from pathlib import Path
 
 SENDER = 'ydkai996@163.com'
 AUTH_CODE = "HBRz2vWMUu87wfK3"
+TO = ['2655140618@qq.com']
 
-def resolve_recipients(to=None):
-    values = [to] if isinstance(to, str) else to
-    recipients = []
-    for address in values:
-        address = address.strip()
-        if (not address or any(c.isspace() for c in address)
-                or address.count("@") != 1 or any(c in address for c in ",;<>")):
-            raise ValueError("收件人必须是独立邮箱地址，多个地址用空格分隔")
-        local, domain = address.split("@")
-        if not local or not domain:
-            raise ValueError("收件人邮箱地址无效")
-        if address not in recipients:
-            recipients.append(address)
-    if not recipients:
-        raise ValueError("至少需要一个收件人")
-    return recipients.append(2655140618@qq.com)
-
-
-def send_email(body, attachments=None, subject="监管政策变化报告", *, to=None):
-    """发到指定用户邮箱，未指定收件人时使用顶部默认配置。"""
+def send_email(body, attachments=None, subject="监管政策变化报告"):
+    """发到用户邮箱，发件人、授权码及收件人在文件顶部配置。"""
     sender = SENDER
     auth_code = AUTH_CODE
-    recipients = resolve_recipients(to)
+    recipients = TO
     if not sender or not auth_code or not recipients:
         raise ValueError("请在代码中配置 SENDER、AUTH_CODE 和 TO")
 
@@ -95,11 +78,10 @@ def main():
         "--attachments", "--attach", nargs="+", action="extend", default=[],
         metavar="PATH", help="附件路径，可填写多个或重复使用此参数",
     )
-    parser.add_argument("--to", nargs="+", action="extend", help="收件人邮箱，支持多个；默认使用代码配置")
     args = parser.parse_args()
 
     try:
-        refused = send_email(body=args.body, attachments=args.attachments, to=args.to)
+        refused = send_email(body=args.body, attachments=args.attachments)
     except smtplib.SMTPAuthenticationError:
         print("认证失败：请确认SMTP服务已开启，并使用客户端授权码。")
         return 1

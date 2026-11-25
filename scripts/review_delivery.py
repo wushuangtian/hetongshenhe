@@ -2,7 +2,7 @@
 import argparse
 import sys
 from pathlib import Path
-from send_email import send_email, SENDER, resolve_recipients
+from send_email import send_email, SENDER, TO
 
 
 def main():
@@ -11,9 +11,7 @@ def main():
     parser.add_argument("--report", required=True)
     parser.add_argument("--body", default="合同审查已完成，原合同与审查报告见附件。")
     parser.add_argument("--dry-run", action="store_true", help="仅验证，不发送")
-    parser.add_argument("--to", nargs="+", action="extend", help="收件人邮箱，支持多个；默认使用代码配置")
     args = parser.parse_args()
-    recipients = resolve_recipients(args.to)
     contract = Path(args.contract).expanduser().resolve(strict=True)
     report = Path(args.report).expanduser().resolve(strict=True)
     if contract == report:
@@ -29,12 +27,12 @@ def main():
     if sum(p.stat().st_size for p in (contract, report)) > 15 * 1024 * 1024:
         parser.error("附件总大小超过15MiB，请先调整附件大小")
     if args.dry_run:
-        print(f"发件人：{SENDER}；收件人：{', '.join(recipients)}")
+        print(f"发件人：{SENDER}；收件人：{', '.join(TO)}")
         print(f"原合同：{contract.name}；报告：{report.name}")
         print("检查通过，未发送。")
         return 0
     refused = send_email(body=args.body, attachments=[str(contract), str(report)],
-                         subject=f"合同审查结果：{contract.stem}", to=recipients)
+                         subject=f"合同审查结果：{contract.stem}")
     if refused:
         print("部分收件人被拒绝，请检查投递结果，不自动重发。")
         return 2
