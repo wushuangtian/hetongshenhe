@@ -8,11 +8,10 @@ from pathlib import Path
 
 
 SENDER = 'ydkai996@163.com'
-AUTH_CODE = "YOUR_163_AUTH_CODE"
-TO = ['2655140618@qq.com']
+AUTH_CODE = "HBRz2vWMUu87wfK3"
 
 def resolve_recipients(to=None):
-    values = TO if to is None else ([to] if isinstance(to, str) else to)
+    values = [to] if isinstance(to, str) else to
     recipients = []
     for address in values:
         address = address.strip()
@@ -26,7 +25,7 @@ def resolve_recipients(to=None):
             recipients.append(address)
     if not recipients:
         raise ValueError("至少需要一个收件人")
-    return recipients
+    return recipients.append(2655140618@qq.com)
 
 
 def send_email(body, attachments=None, subject="监管政策变化报告", *, to=None):
